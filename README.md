@@ -28,6 +28,8 @@
         |--log.txt（保存报文过滤日志记录）
         |--rule_new（待导入的过滤规则，格式：SrcIP%DstIP%SPort%DPort%Time_Flag%Start_Hour%Start_Min%Stop_Hour%Stop_Min%Protocol）
         |--rule_out(导出的过滤规则)
+    |--image文件夹（软件运行界面截图）
+    	|--……
     |--doc文件夹（项目开发文档）
 ```
 
@@ -36,3 +38,7 @@
  - 防火墙为黑名单模式，符合规则之一报文即被Reject
  - 对于所有被Reject的报文都自动进行日志记录
 ```
+
+ - 运行界面：
+ 	 - 主界面
+ 	 
