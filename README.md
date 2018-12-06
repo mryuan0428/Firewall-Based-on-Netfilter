@@ -23,36 +23,17 @@
         |--ckmod.sh（检查内核模块是否插入）
         |--rmmod.sh（内核模块移除）
         |--log.sh（报文过滤日志的采集）
-    |--bin文件夹
-        |--main.sh（在应用层代码中被调用，通过调用其他shell脚本进行内核模块的插入、检查、移除和报文过滤日志的采集）
+    |--data文件夹
+        |--rule.txt（保存正在运行的过滤规则）
+        |--log.txt（保存报文过滤日志记录）
+        |--rule_new（待导入的过滤规则，格式：SIP%DIP%SPORT%DPORT%any%Protocol%yes%reject）
+        |--rule_out(导出的过滤规则)
+    |--doc文件夹（项目开发文档）
 ```
 
+ - 说明：
 ```
-dataset()函数用法说明：
-dataset(*, src='./data2', dst='./dataset', load_from_source=False)
+暂只支持黑名单模式，因而规则Action项只能为reject
+暂不支持基于时间进行过滤，因而规则Time项只能为any
+目前对于所有被reject的报文都进行日志记录，因而规则Log项只能为yes
 ```
-
- - Keyword arguments:
-    * `src` -- `str`, source data path
-    * `dst` -- `str`, dataset path
-    * `load_from_source` -- `bool`, flag if load from source (`False` in default)
-
-    - Notes:
-        * `Info` turn dictionaries into object-like instances
-            - inherits from `dict` type
-            - iterable, and support all functions as `dict`
-            - immutable, thus cannot set or delete attributes after initialisation
-            - `infotodict` -- reverse `Info` object into `dict` type
-        * `Dataset` object herits from `tuple`
-            ```python
-            # returns from `dataset` function
-            >>> data = dataset()
-            # subscriptable as normal tuples
-            >>> data[0]
-            >>> data[1:10]
-            # or to fetch certain keys
-            >>> data[1, 'apt', 'lift']
-            Info(apt=(2,), lift=(1,))
-            >>> data[1:3, 'price', 'average']
-            Info(price=(2600000.0, 3080000.0), average=(44636, 36032))
-            ```
