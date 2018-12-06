@@ -42,4 +42,16 @@
  - 运行界面：
  	 - 主界面
  	![Image text](/image/MainWindows.png)
+ 	 - 添加规则
+ 	![Image text](/image/AddRule.png)
+ 	 - 修改规则
+ 	![Image text](/image/ModifyRule.png)
+ 	 - 删除规则
+ 	![Image text](/image/DeleteRule.png)
+ 	 - 导入规则
+ 	![Image text](/image/ImportRule.png)
+ 	 - 导出规则
+ 	![Image text](/image/ExportRule.png)
+ 	 - 过滤日志记录
+ 	![Image text](/image/Log.png)
 
