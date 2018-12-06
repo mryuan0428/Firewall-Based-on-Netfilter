@@ -26,14 +26,13 @@
     |--data文件夹
         |--rule.txt（保存正在运行的过滤规则）
         |--log.txt（保存报文过滤日志记录）
-        |--rule_new（待导入的过滤规则，格式：SIP%DIP%SPORT%DPORT%any%Protocol%yes%reject）
+        |--rule_new（待导入的过滤规则，格式：SrcIP%DstIP%SPort%DPort%Time_Flag%Start_Hour%Start_Min%Stop_Hour%Stop_Min%Protocol）
         |--rule_out(导出的过滤规则)
     |--doc文件夹（项目开发文档）
 ```
 
  - 说明：
 ```
- - 暂只支持黑名单模式，因而规则Action项只能为reject
- - 暂不支持基于时间进行过滤，因而规则Time项只能为any
- - 目前对于所有被reject的报文都进行日志记录，因而规则Log项只能为yes
+ - 防火墙为黑名单模式，符合规则之一报文即被Reject
+ - 对于所有被reject的报文都自动进行日志记录
 ```
