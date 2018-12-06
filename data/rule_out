@@ -1,0 +1,10 @@
+any%any%any%any%any%icmp%yes%reject
+192.168.44.10%192.168.33.10%any%80%any%tcp%yes%reject
+any%any%any%21%any%tcp%yes%reject
+
+- Meaning: ---------------------------------------------------------------------------
+
+|     SIP      |     DIP      | SPort | DPort | Time | Protocol | Log | Action |
+|           any|           any|    any|    any|   any|      icmp|  yes|  reject|
+| 192.168.44.10| 192.168.33.10|    any|     80|   any|       tcp|  yes|  reject|
+|           any|           any|    any|     21|   any|       tcp|  yes|  reject|

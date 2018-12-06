@@ -8,17 +8,23 @@
 ```
     |--WJ_firewall文件夹（应用层：使用Qt开发的用户界面）
     	|--……
+
     |--build-WJ_firewall-Desktop_Qt_5_9_0_GCC_64bit-Debug文件夹（Qt编译产生的可执行程序，sudo ./WJ_firewall 可运行）
         |--WJ_firewall（可执行程序）
         |--……
-    |--process&module文件夹
-        |--dataset.py -- 包含大量数据处理函数，如facility_process(),dataset()
-            |--facility_process()函数 -- 将数据集中关于设备的描述关键词分类
-            |--dataset()函数 -- 数据集接口，返回dict类型的数据集
-        |--dataset3文件夹 -- facility_process()处理过后的数据集
-        |--建模过程.docx -- 简述建模过程，其中说明了process&module文件夹下tocsv.py，data_c.csv……文件的意义
-        |--result_pictures文件夹 -- 建模过程中各个模型的回归曲线
-        |--……其余文件，包含训练、测试数据集，建模文件，模型… 在建模过程.docx中有说明
+
+    |--my_mod文件夹（内核模块代码：在NF_INET_POST_ROUTING结点挂在钩子函数，接收规则并过滤报文）
+    	|--WJ_firewall.c
+        |--Makefile（sudo make 编译得到内核模块WJ_firewall.ko，并自动复制到bin文件夹）
+
+    |--bin文件夹
+        |--main.sh（在应用层代码中被调用，通过调用其他shell脚本进行内核模块的插入、检查、移除和报文过滤日志的采集）
+        |--insmod.sh（内核模块插入）
+        |--ckmod.sh（检查内核模块是否插入）
+        |--rmmod.sh（内核模块移除）
+        |--log.sh（报文过滤日志的采集）
+    |--bin文件夹
+        |--main.sh（在应用层代码中被调用，通过调用其他shell脚本进行内核模块的插入、检查、移除和报文过滤日志的采集）
 ```
 
 ```
