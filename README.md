@@ -41,7 +41,7 @@
 
  - 运行界面：
  	 - 主界面
- 	 
+
  	![Image text](/image/MainWindows.png)
  	 - 添加规则
 
@@ -61,4 +61,7 @@
  	 - 过滤日志记录
 
  	![Image text](/image/Log.png)
+ 	 - 关于
+
+ 	![Image text](/image/About.png)
 
