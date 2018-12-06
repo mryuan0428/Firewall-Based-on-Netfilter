@@ -3,23 +3,14 @@
 	 - 内核版本：4.2.0-16-generic 
 	 - 开发软件：Qt 5.9.0
 	 - 编译器：gcc version 5.2.1
-	 
+
  - 项目内容：
 ```
-    |--data_spider文件夹
-        |--dataset文件夹 -- 爬取的原始数据
-        |--Spider.py -- 爬虫
-        |--url.txt -- 爬虫url
-        |--数据结构 -- 说明爬到数据的信息
-    |--process_first文件夹
-        |--update.py -- 统一原始数据格式，缺失标签补空值
-        |--dataset2文件夹 -- 小区名转换成经纬坐标后的数据集
-        |--POI_COMMUNITY_SH文件夹 -- 之前爬取的上海小区POI点
-        |--modifyCommunity.py -- 将POI点提取到POI_COMMUNITY_SH文件夹下的community0.txt文件
-        |--modifyCoordinate.py -- 将小区名、经纬度坐标、房屋均价信息提取到coordinate.csv文件，便于后边可视化
-        |--searchForCommunity.py -- 将dataset中小区名转换成经纬坐标后，保存在dataset2
-        |--map.py -- 画出上海房价分布热力图
-        |--map.png -- 上海房价分布热力图
+    |--WJ_firewall文件夹（应用层：使用Qt开发的用户界面）
+    	|--……
+    |--build-WJ_firewall-Desktop_Qt_5_9_0_GCC_64bit-Debug文件夹（Qt编译产生的可执行程序，sudo ./WJ_firewall 可运行）
+        |--WJ_firewall（可执行程序）
+        |--……
     |--process&module文件夹
         |--dataset.py -- 包含大量数据处理函数，如facility_process(),dataset()
             |--facility_process()函数 -- 将数据集中关于设备的描述关键词分类
