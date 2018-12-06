@@ -26,6 +26,7 @@ private slots:
     void on_pushButton_ok_clicked();
     void on_pushButton_cancel_clicked();
     void on_comboBox_protocol_currentTextChanged(const QString &text);
+    void on_comboBox_time_currentTextChanged(const QString &text);
 };
 
 #endif // RULEDIALOG_M_H

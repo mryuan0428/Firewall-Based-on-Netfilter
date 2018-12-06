@@ -24,6 +24,8 @@ private slots:
 
     void on_pushButton_cancel_clicked();
 
+    void on_comboBox_time_currentTextChanged(const QString &text);
+
 private:
     Ui::RuleDialog *ui;
 

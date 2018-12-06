@@ -20,12 +20,16 @@
 
 struct nf_hook_ops myhook;
 
-//保存正在处理的数据包的信息
+//保存正在使用规则的信息
 unsigned int controlled_protocol = 0;
 unsigned short controlled_srcport = 0;
 unsigned short controlled_dstport = 0;
 unsigned int controlled_saddr = 0;
-unsigned int controlled_daddr = 0; 
+unsigned int controlled_daddr = 0;
+
+unsigned int controlled_time_flag = 0;
+unsigned int controlled_time_begin = 0;
+unsigned int controlled_time_end = 0;
 
 //正在处理数据包信息转化为字符串用于日志输出
 char ip_buff_src[16];
@@ -35,9 +39,9 @@ char port_buff_dst[10];
 char time_buff[50];
 char protocol_buff[10];
 
-char controlinfo[1000];
+char controlinfo[1600]; //存储多条规则，每条32byte
 char *pchar;
-int num = 0;
+int num = 0; //规则条数
 
 struct sk_buff *tmpskb;
 struct iphdr *piphdr;
@@ -56,6 +60,20 @@ char * time_from_tm(char * buff, struct rtc_time *tm)
         tm->tm_year+1900, tm->tm_mon+1, tm->tm_mday,
         tm->tm_hour, tm->tm_min, tm->tm_sec);
     return buff;
+}
+
+bool cktime(struct rtc_time *tm) //1不运行
+{
+	if(controlled_time_flag == 0){ //Time_Flag关闭，直接判断下一条规则
+		return 0;
+		}
+	if(controlled_time_flag == 1){ //Time_Flag开启，判断时间区间
+		if(((tm->tm_hour*60+tm->tm_min)<controlled_time_begin)||((tm->tm_hour*60+tm->tm_min)>controlled_time_end)){
+			return 1;
+		}
+		else return 0;
+	}
+	return 0;
 }
 
 bool port_check(unsigned short srcport, unsigned short dstport){
@@ -180,6 +198,7 @@ unsigned int hook_func(void * priv,struct sk_buff *skb,const struct nf_hook_stat
 	addr_from_net(ip_buff_src, piphdr->saddr);
 	addr_from_net(ip_buff_dst, piphdr->daddr);
 
+
 	if(num == 0) return NF_ACCEPT; 
 	else {
 		int i;
@@ -196,7 +215,17 @@ unsigned int hook_func(void * priv,struct sk_buff *skb,const struct nf_hook_stat
 			pchar = pchar + 4;
 			controlled_dstport = *(( int *) pchar);
 			pchar = pchar + 4;
+			controlled_time_flag = *(( int *) pchar);
+			pchar = pchar + 4;
+			controlled_time_begin = *(( int *) pchar);
+			pchar = pchar + 4;
+			controlled_time_end = *(( int *) pchar);
+			pchar = pchar + 4;
 
+			//判断该条规则是否在运行时间中，1:不在运行时间中；0:无flag或在运行时间中
+			if(cktime(&tm) == 1){
+				continue;
+			}
 
 			if(piphdr->protocol != controlled_protocol) 
       			{ result = 0; continue; }
@@ -251,7 +280,7 @@ static ssize_t write_controlinfo(struct file * fd, const char __user *buf, size_
 	}
 
 	pchar = controlinfo;
-	num = len/20;
+	num = len/32;
 	
 	return len;
 }

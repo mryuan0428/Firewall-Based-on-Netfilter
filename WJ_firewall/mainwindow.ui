@@ -206,7 +206,7 @@ QTabBar::tab:!selected{background-color: rgb(239, 235, 231);}
 QTabBar::tab{min-width:80px; min-height:28px; border: 1px solid rgb(188, 185, 181); margin-bottom:1px;}</string>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab_1">
          <property name="focusPolicy">
@@ -311,7 +311,23 @@ QTabBar::tab{min-width:80px; min-height:28px; border: 1px solid rgb(188, 185, 18
             </column>
             <column>
              <property name="text">
-              <string>TIME</string>
+              <string>TIME_FLAG</string>
+             </property>
+             <property name="textAlignment">
+              <set>AlignCenter</set>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>TIME_BEGIN</string>
+             </property>
+             <property name="textAlignment">
+              <set>AlignCenter</set>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>TIME_END</string>
              </property>
              <property name="textAlignment">
               <set>AlignCenter</set>
@@ -320,14 +336,6 @@ QTabBar::tab{min-width:80px; min-height:28px; border: 1px solid rgb(188, 185, 18
             <column>
              <property name="text">
               <string>PROTOCOL</string>
-             </property>
-             <property name="textAlignment">
-              <set>AlignCenter</set>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>LOG</string>
              </property>
              <property name="textAlignment">
               <set>AlignCenter</set>

@@ -19,6 +19,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QTimeEdit>
 
 QT_BEGIN_NAMESPACE
 
@@ -40,9 +41,9 @@ public:
     QLabel *label_6;
     QComboBox *comboBox_protocol;
     QLabel *label_7;
+    QTimeEdit *timeEdit;
     QLabel *label_8;
-    QComboBox *comboBox_action;
-    QComboBox *comboBox_log;
+    QTimeEdit *timeEdit_2;
 
     void setupUi(QDialog *RuleDialog)
     {
@@ -70,10 +71,10 @@ public:
         label_2->setGeometry(QRect(40, 60, 67, 25));
         label_3 = new QLabel(RuleDialog);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(320, 20, 67, 25));
+        label_3->setGeometry(QRect(320, 20, 71, 25));
         label_4 = new QLabel(RuleDialog);
         label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(320, 60, 67, 25));
+        label_4->setGeometry(QRect(320, 60, 71, 25));
         lineEdit_src_ip = new QLineEdit(RuleDialog);
         lineEdit_src_ip->setObjectName(QStringLiteral("lineEdit_src_ip"));
         lineEdit_src_ip->setGeometry(QRect(110, 20, 150, 25));
@@ -85,7 +86,7 @@ public:
         lineEdit_dst_port->setGeometry(QRect(400, 60, 150, 25));
         lineEdit_dst_ip = new QLineEdit(RuleDialog);
         lineEdit_dst_ip->setObjectName(QStringLiteral("lineEdit_dst_ip"));
-        lineEdit_dst_ip->setGeometry(QRect(400, 20, 150, 25));
+        lineEdit_dst_ip->setGeometry(QRect(399, 20, 151, 25));
         comboBox_time = new QComboBox(RuleDialog);
         comboBox_time->setObjectName(QStringLiteral("comboBox_time"));
         comboBox_time->setGeometry(QRect(110, 110, 150, 25));
@@ -104,20 +105,18 @@ public:
         comboBox_protocol->setSizePolicy(sizePolicy);
         label_7 = new QLabel(RuleDialog);
         label_7->setObjectName(QStringLiteral("label_7"));
-        label_7->setGeometry(QRect(320, 150, 67, 25));
+        label_7->setGeometry(QRect(40, 150, 80, 25));
+        timeEdit = new QTimeEdit(RuleDialog);
+        timeEdit->setObjectName(QStringLiteral("timeEdit"));
+        timeEdit->setGeometry(QRect(130, 150, 130, 26));
+        timeEdit->setAlignment(Qt::AlignCenter);
         label_8 = new QLabel(RuleDialog);
         label_8->setObjectName(QStringLiteral("label_8"));
-        label_8->setGeometry(QRect(40, 150, 67, 25));
-        comboBox_action = new QComboBox(RuleDialog);
-        comboBox_action->setObjectName(QStringLiteral("comboBox_action"));
-        comboBox_action->setGeometry(QRect(400, 150, 150, 25));
-        sizePolicy.setHeightForWidth(comboBox_action->sizePolicy().hasHeightForWidth());
-        comboBox_action->setSizePolicy(sizePolicy);
-        comboBox_log = new QComboBox(RuleDialog);
-        comboBox_log->setObjectName(QStringLiteral("comboBox_log"));
-        comboBox_log->setGeometry(QRect(110, 150, 150, 25));
-        sizePolicy.setHeightForWidth(comboBox_log->sizePolicy().hasHeightForWidth());
-        comboBox_log->setSizePolicy(sizePolicy);
+        label_8->setGeometry(QRect(320, 150, 80, 25));
+        timeEdit_2 = new QTimeEdit(RuleDialog);
+        timeEdit_2->setObjectName(QStringLiteral("timeEdit_2"));
+        timeEdit_2->setGeometry(QRect(420, 150, 130, 26));
+        timeEdit_2->setAlignment(Qt::AlignCenter);
 
         retranslateUi(RuleDialog);
 
@@ -139,8 +138,8 @@ public:
         lineEdit_dst_ip->setText(QApplication::translate("RuleDialog", "any", Q_NULLPTR));
         label_5->setText(QApplication::translate("RuleDialog", "\346\227\266\351\227\264\357\274\232", Q_NULLPTR));
         label_6->setText(QApplication::translate("RuleDialog", "\345\215\217\350\256\256\357\274\232", Q_NULLPTR));
-        label_7->setText(QApplication::translate("RuleDialog", "\345\212\250\344\275\234\357\274\232", Q_NULLPTR));
-        label_8->setText(QApplication::translate("RuleDialog", "\346\227\245\345\277\227\357\274\232", Q_NULLPTR));
+        label_7->setText(QApplication::translate("RuleDialog", "\345\274\200\345\247\213\346\227\266\351\227\264\357\274\232", Q_NULLPTR));
+        label_8->setText(QApplication::translate("RuleDialog", "\347\273\223\346\235\237\346\227\266\351\227\264\357\274\232", Q_NULLPTR));
     } // retranslateUi
 
 };

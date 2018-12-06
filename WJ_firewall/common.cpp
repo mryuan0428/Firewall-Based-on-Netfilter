@@ -2,126 +2,6 @@
 
 QList<rule_str_tp> ruleStringList;
 
-bool ruleFromString(rule_str_tp ruleString, rule_tp &rule)
-{
-    //action
-    if (ruleString.action == "permit"){
-        rule.flag &= 0xFF ^ BYTE0;
-    } else if (ruleString.action == "reject"){
-        rule.flag |= BYTE0;
-    } else{
-        return false;
-    }
-
-    //time
-    if (ruleString.time == "any"){
-        rule.flag &= 0xFF ^ BYTE1;
-    } else{
-        rule.flag |= BYTE1;
-         if (ruleString.time == "work"){
-             rule.days = BYTE1 | BYTE2 | BYTE3 | BYTE4 | BYTE5;
-             rule.bg_time = 8 * 60;     //8:00
-             rule.ed_time = 18 * 60;    //18:00
-         } else{
-             return false;
-         }
-    }
-
-    //protocol
-    if (ruleString.protocol == "any"){
-        rule.flag &= 0xFF ^ BYTE2;
-    } else{
-        rule.flag |= BYTE2;
-        if (ruleString.protocol == "tcp"){
-            rule.protocol = IPPROTO_TCP;
-        } else if (ruleString.protocol == "udp"){
-            rule.protocol = IPPROTO_UDP;
-        } else if (ruleString.protocol == "icmp"){
-            rule.protocol = IPPROTO_ICMP;
-        }else{
-            return false;
-        }
-    }
-
-    //log
-    if (ruleString.log == "no"){
-        rule.flag &= 0xFF ^ BYTE3;
-    } else if (ruleString.log == "yes"){
-        rule.flag |= BYTE3;
-    } else{
-        return false;
-    }
-
-    //src_port
-    if (ruleString.src_port == "any"){
-        rule.flag &= 0xFF ^ BYTE4;
-    } else if(rulePortCheck(ruleString.src_port)){
-        rule.flag |= BYTE4;
-        int src_port_int = ruleString.src_port.toInt();
-        rule.src_port = htons((quint16)src_port_int);
-    } else{
-        return false;
-    }
-
-    //dst_port
-    if (ruleString.src_port == "any"){
-        rule.flag &= 0xFF ^ BYTE5;
-    } else if(rulePortCheck(ruleString.dst_port)){
-        rule.flag |= BYTE5;
-        int dst_port_int = ruleString.dst_port.toInt();
-        rule.dst_port = htons((quint16)dst_port_int);
-    } else{
-        return false;
-    }
-
-    //src_ip
-    if (ruleString.src_addr == "any"){
-        rule.flag &= 0xFF ^ BYTE6;
-    } else if (ruleAddrCheck(ruleString.src_addr)){
-        rule.flag |= BYTE6;
-        QStringList src_ip_spilt = ruleString.src_addr.split("/");
-        //mask
-        if (src_ip_spilt.length() == 1){
-            rule.src_mask = 0xFFFFFFFF;
-        } else if (src_ip_spilt.length() == 2){
-            int mask = src_ip_spilt[1].toInt();
-            rule.src_mask = htonl(0xFFFFFFFF << (32 - mask));
-        }
-        //addr
-        struct in_addr src_in_addr;
-        const char *src_ip_str = src_ip_spilt[0].toUtf8().constData();
-        inet_aton(src_ip_str, &src_in_addr);
-        rule.src_addr = src_in_addr.s_addr;
-    } else{
-        return false;
-    }
-
-    //dst_ip
-    if (ruleString.dst_addr == "any"){
-        rule.flag &= 0xFF ^ BYTE7;
-    } else if (ruleAddrCheck(ruleString.dst_addr)){
-        rule.flag |= BYTE7;
-        QStringList dst_ip_spilt = ruleString.dst_addr.split("/");
-        //mask
-        if (dst_ip_spilt.length() == 1){
-            rule.dst_mask = 0xFFFFFFFF;
-        } else if (dst_ip_spilt.length() == 2){
-            int mask = dst_ip_spilt[1].toInt();
-            rule.dst_mask = htonl(0xFFFFFFFF << (32 - mask));
-        }
-        //addr
-        struct in_addr dst_in_addr;
-        const char *dst_ip_str = dst_ip_spilt[0].toUtf8().constData();
-        inet_aton(dst_ip_str, &dst_in_addr);
-        rule.dst_addr = dst_in_addr.s_addr;
-    } else{
-        return false;
-    }
-
-    return true;
-}
-
-
 bool ruleFromString_new(rule_str_tp ruleString, char *p_controlinfo)
 {
     unsigned int controlled_protocol = 0;
@@ -129,6 +9,9 @@ bool ruleFromString_new(rule_str_tp ruleString, char *p_controlinfo)
     unsigned short controlled_dstport = 0;
     unsigned int controlled_saddr = 0;
     unsigned int controlled_daddr = 0;
+    unsigned int controlled_time_flag = 0;
+    unsigned int controlled_time_begin = 0;
+    unsigned int controlled_time_end = 0;
 
     //协议
     if (strncmp(ruleString.protocol.toStdString().data(), "icmp",4) == 0 )
@@ -185,17 +68,33 @@ bool ruleFromString_new(rule_str_tp ruleString, char *p_controlinfo)
         controlled_dstport = htons(tmpport);
     }
 
+    //Time_Flag
+    if (strncmp(ruleString.time_flag.toStdString().data(), "yes",3) == 0 )
+        controlled_time_flag = 1;
+    else if ( strncmp(ruleString.time_flag.toStdString().data(), "no",2) == 0  )
+        controlled_time_flag = 0;
+    else {
+        printf("Time Flag Wrong! \n");
+        return false;
+         }
+
+    //Time_Begin
+    controlled_time_begin = ruleString.hour_begin.toInt()*60 + ruleString.min_begin.toInt();
+    //Time_End
+    controlled_time_end = ruleString.hour_end.toInt()*60 + ruleString.min_end.toInt();
+
+    //放入字符串中
     *(int *)p_controlinfo = controlled_protocol;
     *(int *)(p_controlinfo + 4) = controlled_saddr;
     *(int *)(p_controlinfo + 8) = controlled_daddr;
     *(int *)(p_controlinfo + 12) = controlled_srcport;
     *(int *)(p_controlinfo + 16) = controlled_dstport;
+    *(int *)(p_controlinfo + 20) = controlled_time_flag;
+    *(int *)(p_controlinfo + 24) = controlled_time_begin;
+    *(int *)(p_controlinfo + 28) = controlled_time_end;
 
     return true;
 }
-
-
-
 
 bool ruleAddrCheck(QString addrString)
 {

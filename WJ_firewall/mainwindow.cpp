@@ -1,16 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-char controlinfo[1000];
+char controlinfo[1600];
 int numa=0;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    //setup
+    //主窗口初始化设置
     ui->setupUi(this);
     addRuleDialog = new RuleDialog(this);
-
     delRuleDialog = new MessageDialog(this);
     delRuleDialog->setMessage("确定要删除吗？");
     label_runStatus = new QLabel();
@@ -30,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     rulesTable->horizontalHeader()->setSectionResizeMode(6, QHeaderView::Stretch);
     rulesTable->horizontalHeader()->setSectionResizeMode(7, QHeaderView::Stretch);
     rulesTable->horizontalHeader()->setSectionResizeMode(8, QHeaderView::Stretch);
+    rulesTable->horizontalHeader()->setSectionResizeMode(9, QHeaderView::Stretch);
     rulesTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     logTimer = new QTimer(this);
 
@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     if (isModLoaded()){
         ui->pushButton_fiterOn->setEnabled(false);
         label_runStatus->setText("运行状态：已启动");
-        logTimer->start(LOG_UPDATE_TIME);
+        logTimer->start(LOG_UPDATE_TIME); //every 100ms fresh the log
     }else{
         ui->pushButton_fiterOff->setEnabled(false);
         label_runStatus->setText("运行状态：未启动");
@@ -62,6 +62,7 @@ MainWindow::~MainWindow()
 
 QString MainWindow::runShell(QString cmd)
 {
+    //执行shell命令，调用脚本
     QProcess *shell = new QProcess(this);
     shell->start(cmd);
     shell->waitForFinished();
@@ -75,14 +76,15 @@ bool MainWindow::isModLoaded()
 
 bool MainWindow::sendRuleToFirewall()
 {
+    //将ruleStringList发送个防火墙内核模块
     if (!isModLoaded()){
         return false;
     }
 
-    int count = 0;
-
+    int count = 0; //记录规则数量
+    //规则转化为字符串再发送
     foreach(rule_str_tp ruleString, ruleStringList){
-        if (ruleFromString_new(ruleString, (controlinfo+(count*20)))){
+        if (ruleFromString_new(ruleString, (controlinfo+(count*32)))){
             count++;
         }
         if (count > RULE_COUNT_MAX){
@@ -93,7 +95,7 @@ bool MainWindow::sendRuleToFirewall()
     fp =open("/dev/controlinfo",O_RDWR,S_IRUSR|S_IWUSR);
     if (fp > 0)
     {
-        write(fp,controlinfo,count*20);
+        write(fp,controlinfo,count*32);
     }
     else {
         QMessageBox::critical(this, "错误", "无法打开controlinfo！");
@@ -101,25 +103,12 @@ bool MainWindow::sendRuleToFirewall()
     }
     ::close(fp);
 
-
-
-    /*rule load
-    int fd0 = open("/dev/controlinfo", O_RDONLY);
-    if (fd0 < 0){
-        QMessageBox::critical(this, "错误", "无法打开controlinfo！");
-        return false;
-    }
-    if (ioctl(fd0, FIREWALL_IOCTL_RULE, count) < 0){
-        QMessageBox::critical(this, "错误", "ioctl error!");
-        return false;
-    }
-    ::close(fd0); */
-
     return true;
 }
 
 bool MainWindow::setRuleStringFile()
 {
+    //将有改动的ruleStringList更新到rule.txt文档
     QDir dir("../data/");
     if (!dir.exists()){
         dir.mkdir("../data/");
@@ -135,10 +124,12 @@ bool MainWindow::setRuleStringFile()
                 + ruleString.dst_addr + "%"
                 + ruleString.src_port + "%"
                 + ruleString.dst_port + "%"
-                + ruleString.time + "%"
-                + ruleString.protocol + "%"
-                + ruleString.log + "%"
-                + ruleString.action;
+                + ruleString.time_flag + "%"
+                + ruleString.hour_begin + "%"
+                + ruleString.min_begin + "%"
+                + ruleString.hour_end + "%"
+                + ruleString.min_end + "%"
+                + ruleString.protocol;
         stream << temp << endl;
     }
     f.close();
@@ -157,10 +148,12 @@ bool MainWindow::getRuleStringFile()
         return false;
     }
     QTextStream stream(&f);
+
+    //逐条取规则并显示，存储在ruleStringList
     while (!stream.atEnd()){
         QString lineStr = stream.readLine();
         QStringList lineSpilt = lineStr.split("%");
-        if (lineSpilt.length() != 8){
+        if (lineSpilt.length() != 10){
             continue;
         }
         rule_str_tp ruleString;
@@ -168,10 +161,12 @@ bool MainWindow::getRuleStringFile()
         ruleString.dst_addr = lineSpilt[1];
         ruleString.src_port = lineSpilt[2];
         ruleString.dst_port = lineSpilt[3];
-        ruleString.time = lineSpilt[4];
-        ruleString.protocol = lineSpilt[5];
-        ruleString.log = lineSpilt[6];
-        ruleString.action = lineSpilt[7];
+        ruleString.time_flag = lineSpilt[4];
+        ruleString.hour_begin = lineSpilt[5];
+        ruleString.min_begin = lineSpilt[6];
+        ruleString.hour_end = lineSpilt[7];
+        ruleString.min_end = lineSpilt[8];
+        ruleString.protocol = lineSpilt[9];
 
         if (ruleAddrCheck(ruleString.src_addr) &&ruleAddrCheck(ruleString.dst_addr) &&
             rulePortCheck(ruleString.src_port) &&rulePortCheck(ruleString.dst_port))
@@ -189,7 +184,7 @@ void MainWindow::updateRuleNo()
 
 void MainWindow::on_pushButton_addRule_clicked()
 {
-    if (ruleStringList.length() >= 100){
+    if (ruleStringList.length() >= 50){
         QMessageBox::information(this, "提示", "规则数量已达上限！");
         return;
     }
@@ -244,6 +239,7 @@ void MainWindow::on_pushButton_fiterOff_clicked()
 
 void MainWindow::addRuleString(rule_str_tp ruleString)
 {
+    //将单条规则添加至ruleStringList
     ruleStringList.append(ruleString);
     int row = ruleStringList.length();
     rulesTable->setRowCount(row);
@@ -252,10 +248,11 @@ void MainWindow::addRuleString(rule_str_tp ruleString)
     rulesTable->setItem(row - 1, 2, new QTableWidgetItem(ruleString.src_port));
     rulesTable->setItem(row - 1, 3, new QTableWidgetItem(ruleString.dst_addr));
     rulesTable->setItem(row - 1, 4, new QTableWidgetItem(ruleString.dst_port));
-    rulesTable->setItem(row - 1, 5, new QTableWidgetItem(ruleString.time));
-    rulesTable->setItem(row - 1, 6, new QTableWidgetItem(ruleString.protocol));
-    rulesTable->setItem(row - 1, 7, new QTableWidgetItem(ruleString.log));
-    rulesTable->setItem(row - 1, 8, new QTableWidgetItem(ruleString.action));
+    rulesTable->setItem(row - 1, 5, new QTableWidgetItem(ruleString.time_flag));
+    rulesTable->setItem(row - 1, 6, new QTableWidgetItem(ruleString.hour_begin+':'+ruleString.min_begin));
+    rulesTable->setItem(row - 1, 7, new QTableWidgetItem(ruleString.hour_end+':'+ruleString.min_end));
+    rulesTable->setItem(row - 1, 8, new QTableWidgetItem(ruleString.protocol));
+    rulesTable->setItem(row - 1, 9, new QTableWidgetItem("reject"));
     for (int i=0; i<rulesTable->columnCount(); ++i){
         rulesTable->item(row - 1, i)->setTextAlignment(Qt::AlignCenter);
     }
@@ -270,10 +267,11 @@ void MainWindow::modRuleString(rule_str_tp ruleString)
     rulesTable->setItem(numa, 2, new QTableWidgetItem(ruleString.src_port));
     rulesTable->setItem(numa, 3, new QTableWidgetItem(ruleString.dst_addr));
     rulesTable->setItem(numa, 4, new QTableWidgetItem(ruleString.dst_port));
-    rulesTable->setItem(numa, 5, new QTableWidgetItem(ruleString.time));
-    rulesTable->setItem(numa, 6, new QTableWidgetItem(ruleString.protocol));
-    rulesTable->setItem(numa, 7, new QTableWidgetItem(ruleString.log));
-    rulesTable->setItem(numa, 8, new QTableWidgetItem(ruleString.action));
+    rulesTable->setItem(numa, 5, new QTableWidgetItem(ruleString.time_flag));
+    rulesTable->setItem(numa, 6, new QTableWidgetItem(ruleString.hour_begin+':'+ruleString.min_begin));
+    rulesTable->setItem(numa, 7, new QTableWidgetItem(ruleString.hour_end+':'+ruleString.min_end));
+    rulesTable->setItem(numa, 8, new QTableWidgetItem(ruleString.protocol));
+    rulesTable->setItem(numa, 9, new QTableWidgetItem("reject"));
     for (int i=0; i<rulesTable->columnCount(); ++i){
         rulesTable->item(numa, i)->setTextAlignment(Qt::AlignCenter);
     }
@@ -282,6 +280,7 @@ void MainWindow::modRuleString(rule_str_tp ruleString)
 
 void MainWindow::delRuleString(bool action)
 {
+    //从ruleStringList和rulesTable中删除规则
     if (action){
         int rowIndex = rulesTable->currentRow();
         if (rowIndex >= 0){
@@ -377,7 +376,7 @@ void MainWindow::on_action_importRules_triggered()
                 while (!instream.atEnd()){
                     QString lineStr = instream.readLine();
                     QStringList lineSpilt = lineStr.split("%");
-                    if (lineSpilt.length() != 8){
+                    if (lineSpilt.length() != 10){
                         continue;
                     }
                     rule_str_tp ruleString;
@@ -385,10 +384,12 @@ void MainWindow::on_action_importRules_triggered()
                     ruleString.dst_addr = lineSpilt[1];
                     ruleString.src_port = lineSpilt[2];
                     ruleString.dst_port = lineSpilt[3];
-                    ruleString.time = lineSpilt[4];
-                    ruleString.protocol = lineSpilt[5];
-                    ruleString.log = lineSpilt[6];
-                    ruleString.action = lineSpilt[7];
+                    ruleString.time_flag = lineSpilt[4];
+                    ruleString.hour_begin = lineSpilt[5];
+                    ruleString.min_begin = lineSpilt[6];
+                    ruleString.hour_end = lineSpilt[7];
+                    ruleString.min_end = lineSpilt[8];
+                    ruleString.protocol = lineSpilt[9];
 
                     if (ruleAddrCheck(ruleString.src_addr) &&ruleAddrCheck(ruleString.dst_addr) &&
                         rulePortCheck(ruleString.src_port) &&rulePortCheck(ruleString.dst_port))
@@ -401,10 +402,11 @@ void MainWindow::on_action_importRules_triggered()
                         rulesTable->setItem(row - 1, 2, new QTableWidgetItem(ruleString.src_port));
                         rulesTable->setItem(row - 1, 3, new QTableWidgetItem(ruleString.dst_addr));
                         rulesTable->setItem(row - 1, 4, new QTableWidgetItem(ruleString.dst_port));
-                        rulesTable->setItem(row - 1, 5, new QTableWidgetItem(ruleString.time));
-                        rulesTable->setItem(row - 1, 6, new QTableWidgetItem(ruleString.protocol));
-                        rulesTable->setItem(row - 1, 7, new QTableWidgetItem(ruleString.log));
-                        rulesTable->setItem(row - 1, 8, new QTableWidgetItem(ruleString.action));
+                        rulesTable->setItem(row - 1, 5, new QTableWidgetItem(ruleString.time_flag));
+                        rulesTable->setItem(row - 1, 6, new QTableWidgetItem(ruleString.hour_begin+':'+ruleString.min_begin));
+                        rulesTable->setItem(row - 1, 7, new QTableWidgetItem(ruleString.hour_end+':'+ruleString.min_end));
+                        rulesTable->setItem(row - 1, 8, new QTableWidgetItem(ruleString.protocol));
+                        rulesTable->setItem(row - 1, 9, new QTableWidgetItem("reject"));
                         for (int i=0; i<rulesTable->columnCount(); ++i){
                             rulesTable->item(row - 1, i)->setTextAlignment(Qt::AlignCenter);
                         }
@@ -445,23 +447,27 @@ void MainWindow::on_action_exportRules_triggered()
                            + ruleString.dst_addr + "%"
                            + ruleString.src_port + "%"
                            + ruleString.dst_port + "%"
-                           + ruleString.time + "%"
-                           + ruleString.protocol + "%"
-                           + ruleString.log + "%"
-                           + ruleString.action;
+                           + ruleString.time_flag + "%"
+                           + ruleString.hour_begin + "%"
+                           + ruleString.min_begin + "%"
+                           + ruleString.hour_end + "%"
+                           + ruleString.min_end + "%"
+                           + ruleString.protocol;
                    textStream <<temp << endl;
                }
-            textStream<<'\n'<<"- Meaning: ---------------------------------------------------------------------------"<<'\n'<<endl;
-            textStream<<"|     SIP      |     DIP      | SPort | DPort | Time | Protocol | Log | Action |"<<endl;
+            textStream<<'\n'<<"- Meaning: ---------------------------------------------------------------------------------"<<'\n'<<endl;
+            textStream<<"|     SIP      |     DIP      | SPort | DPort | Time | SHour | SMin | EHour | EMin | Protocol |"<<endl;
            foreach (rule_str_tp ruleString, ruleStringList) {
                    QString temp = '|'+ruleString.src_addr.rightJustified(14,' ')+'|'
                            + ruleString.dst_addr.rightJustified(14,' ')+'|'
                            + ruleString.src_port.rightJustified(7,' ')+'|'
                            + ruleString.dst_port.rightJustified(7,' ')+'|'
-                           + ruleString.time.rightJustified(6,' ')+'|'
-                           + ruleString.protocol.rightJustified(10,' ')+'|'
-                           + ruleString.log.rightJustified(5,' ')+'|'
-                           + ruleString.action.rightJustified(8,' ')+'|';
+                           + ruleString.time_flag.rightJustified(6,' ')+'|'
+                           + ruleString.hour_begin.rightJustified(7,' ')+'|'
+                           + ruleString.min_begin.rightJustified(6,' ')+'|'
+                           + ruleString.hour_end.rightJustified(7,' ')+'|'
+                           + ruleString.min_end.rightJustified(6,' ')+'|'
+                           + ruleString.protocol.rightJustified(10,' ')+'|';
                    textStream << temp << endl;
                }
 

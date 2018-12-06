@@ -16,6 +16,8 @@
 #include <QTableWidget>
 #include <QTextStream>
 #include <QTimer>
+#include <QTime>
+#include <QTimeEdit>
 #include <QVariant>
 #include <arpa/inet.h>
 #include <fcntl.h>
@@ -27,65 +29,25 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define BYTE0   0x01
-#define BYTE1   0x02
-#define BYTE2   0x04
-#define BYTE3   0x08
-#define BYTE4   0x10
-#define BYTE5   0x20
-#define BYTE6   0x40
-#define BYTE7   0x80
 
-#define RULE_COUNT_MAX  50
-
-#define FIREWALL_IOCTL_RULE 1
-#define FIREWALL_IOCTL_LOG  2
-
+#define RULE_COUNT_MAX  50  //最大规则数
 #define LOG_UPDATE_TIME 100 //ms
-
-
-
-/*
- *flag bit0: action
- *flag bit1: time
- *flag bit2: protocol
- *flag bit3: log
- *flag bit4: src_port
- *flag bit5: dst_port
- *flag bit6: src_addr
- *flag bit7: dst_addr
- */
-struct rule_tp
-{
-    quint8 flag;
-    quint8 protocol;
-    quint8 days;        //bit0:sun, bit1:mon, ..., bit6:sat
-    quint16 bg_time;	//from 00:00 to 23:59
-    quint16 ed_time;
-    quint16 src_port;
-    quint16 dst_port;
-    quint32 src_addr;
-    quint32 dst_addr;
-    quint32 src_mask;
-    quint32 dst_mask;
-};
-
-
 
 
 struct rule_str_tp  //保存规则信息
 {
-    QString src_addr;
-    QString dst_addr;
-    QString src_port;
-    QString dst_port;
-    QString time;
-    QString protocol;
-    QString log;
-    QString action;
+    QString src_addr;  //0 4B
+    QString dst_addr;  //1 4B
+    QString src_port;  //2 4B
+    QString dst_port;  //3 4B
+    QString time_flag; //4 4B
+    QString hour_begin;//5 4B
+    QString min_begin; //6
+    QString hour_end;  //7 4B
+    QString min_end;   //8
+    QString protocol;  //9 4B
 };
 
-bool ruleFromString(rule_str_tp ruleString, rule_tp &rule);
 bool ruleFromString_new(rule_str_tp ruleString, char *p_controlinfo);
 bool ruleAddrCheck(QString addrString);
 bool rulePortCheck(QString portString);

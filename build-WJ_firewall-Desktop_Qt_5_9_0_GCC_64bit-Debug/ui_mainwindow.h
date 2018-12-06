@@ -159,8 +159,8 @@ public:
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         tableWidget = new QTableWidget(tab_1);
-        if (tableWidget->columnCount() < 9)
-            tableWidget->setColumnCount(9);
+        if (tableWidget->columnCount() < 10)
+            tableWidget->setColumnCount(10);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         __qtablewidgetitem->setTextAlignment(Qt::AlignCenter);
         tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
@@ -188,6 +188,9 @@ public:
         QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
         __qtablewidgetitem8->setTextAlignment(Qt::AlignCenter);
         tableWidget->setHorizontalHeaderItem(8, __qtablewidgetitem8);
+        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
+        __qtablewidgetitem9->setTextAlignment(Qt::AlignCenter);
+        tableWidget->setHorizontalHeaderItem(9, __qtablewidgetitem9);
         tableWidget->setObjectName(QStringLiteral("tableWidget"));
         tableWidget->setStyleSheet(QStringLiteral("margin:-1px;"));
         tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -253,7 +256,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -282,13 +285,15 @@ public:
         QTableWidgetItem *___qtablewidgetitem4 = tableWidget->horizontalHeaderItem(4);
         ___qtablewidgetitem4->setText(QApplication::translate("MainWindow", "DPORT", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem5 = tableWidget->horizontalHeaderItem(5);
-        ___qtablewidgetitem5->setText(QApplication::translate("MainWindow", "TIME", Q_NULLPTR));
+        ___qtablewidgetitem5->setText(QApplication::translate("MainWindow", "TIME_FLAG", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem6 = tableWidget->horizontalHeaderItem(6);
-        ___qtablewidgetitem6->setText(QApplication::translate("MainWindow", "PROTOCOL", Q_NULLPTR));
+        ___qtablewidgetitem6->setText(QApplication::translate("MainWindow", "TIME_BEGIN", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem7 = tableWidget->horizontalHeaderItem(7);
-        ___qtablewidgetitem7->setText(QApplication::translate("MainWindow", "LOG", Q_NULLPTR));
+        ___qtablewidgetitem7->setText(QApplication::translate("MainWindow", "TIME_END", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem8 = tableWidget->horizontalHeaderItem(8);
-        ___qtablewidgetitem8->setText(QApplication::translate("MainWindow", "ACTION", Q_NULLPTR));
+        ___qtablewidgetitem8->setText(QApplication::translate("MainWindow", "PROTOCOL", Q_NULLPTR));
+        QTableWidgetItem *___qtablewidgetitem9 = tableWidget->horizontalHeaderItem(9);
+        ___qtablewidgetitem9->setText(QApplication::translate("MainWindow", "ACTION", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_1), QApplication::translate("MainWindow", "\350\247\204\345\210\231", Q_NULLPTR));
         pushButton_logClean->setText(QApplication::translate("MainWindow", "\346\270\205\351\231\244\346\227\245\345\277\227", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "\346\227\245\345\277\227", Q_NULLPTR));

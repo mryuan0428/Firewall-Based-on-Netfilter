@@ -7,7 +7,7 @@
 #include "ruledialog.h"
 #include "messagedialog.h"
 #include "ruledialog_m.h"
-extern char controlinfo[1000];
+extern char controlinfo[1600];
 
 namespace Ui {
 class MainWindow;
