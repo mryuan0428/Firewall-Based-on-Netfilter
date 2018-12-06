@@ -1,3 +1,3 @@
    *.c linguist-language=c
    *.cpp linguist-language=c
-   *.html linguist-language=python
+   *.o linguist-language=c
