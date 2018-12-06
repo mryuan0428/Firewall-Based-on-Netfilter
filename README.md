@@ -1,4 +1,6 @@
-#语言：python3
+ - 开发环境：
+	 - 操作系统：Ubuntu 15.10	 内核版本：4.2.0-16-generic 
+	 - 开发软件：Qt 5.9.0	 gcc version 5.2.1
 ```
     |--data_spider文件夹
         |--dataset文件夹 -- 爬取的原始数据
