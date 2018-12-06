@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     addRuleDialog = new RuleDialog(this);
     delRuleDialog = new MessageDialog(this);
+    aboutDialog = new aboutdialog(this);
     delRuleDialog->setMessage("确定要删除吗？");
     label_runStatus = new QLabel();
     label_runStatus->setAlignment(Qt::AlignHCenter);
@@ -475,4 +476,22 @@ void MainWindow::on_action_exportRules_triggered()
            file.close();
        }
 
+}
+
+void MainWindow::on_action_exitAPP_triggered()
+{
+    this->close();
+}
+
+void MainWindow::on_action_about_triggered()
+{
+    aboutDialog->setMessage("- 开发环境：\n"
+                              "         操作系统：Ubuntu 15.10 \n"
+                              "         内核版本：4.2.0-16-generic \n"
+                              "         开发软件：Qt 5.9.0 \n"
+                              "         编译器：gcc version 5.2.1 \n\n"
+                              "- 作者：WJ_Yuan \n"
+                              "           mryuan0428@sjtu.edu.cn \n\n"
+                              "        Copyright (c) 2018 WJ_YUAN");
+    aboutDialog->exec();
 }

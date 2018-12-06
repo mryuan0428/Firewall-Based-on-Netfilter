@@ -29,17 +29,21 @@ SOURCES += \
     common.cpp \
     messagedialog.cpp \
     ruledialog.cpp \
-    ruledialog_m.cpp
+    ruledialog_m.cpp \
+    aboutdialog.cpp
 
 HEADERS += \
         mainwindow.h \
     common.h \
     messagedialog.h \
     ruledialog.h \
-    ruledialog_m.h
+    ruledialog_m.h \
+    aboutdialog.h
 
 FORMS += \
         mainwindow.ui \
     messagedialog.ui \
     ruledialog.ui \
-    ruledialog_m.ui
+    ruledialog_m.ui \
+    aboutdialog.ui
+

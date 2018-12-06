@@ -56,20 +56,24 @@ SOURCES       = ../WJ_firewall/main.cpp \
 		../WJ_firewall/common.cpp \
 		../WJ_firewall/messagedialog.cpp \
 		../WJ_firewall/ruledialog.cpp \
-		../WJ_firewall/ruledialog_m.cpp moc_mainwindow.cpp \
+		../WJ_firewall/ruledialog_m.cpp \
+		../WJ_firewall/aboutdialog.cpp moc_mainwindow.cpp \
 		moc_messagedialog.cpp \
 		moc_ruledialog.cpp \
-		moc_ruledialog_m.cpp
+		moc_ruledialog_m.cpp \
+		moc_aboutdialog.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		common.o \
 		messagedialog.o \
 		ruledialog.o \
 		ruledialog_m.o \
+		aboutdialog.o \
 		moc_mainwindow.o \
 		moc_messagedialog.o \
 		moc_ruledialog.o \
-		moc_ruledialog_m.o
+		moc_ruledialog_m.o \
+		moc_aboutdialog.o
 DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/common/linux.conf \
@@ -254,12 +258,14 @@ DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		../WJ_firewall/common.h \
 		../WJ_firewall/messagedialog.h \
 		../WJ_firewall/ruledialog.h \
-		../WJ_firewall/ruledialog_m.h ../WJ_firewall/main.cpp \
+		../WJ_firewall/ruledialog_m.h \
+		../WJ_firewall/aboutdialog.h ../WJ_firewall/main.cpp \
 		../WJ_firewall/mainwindow.cpp \
 		../WJ_firewall/common.cpp \
 		../WJ_firewall/messagedialog.cpp \
 		../WJ_firewall/ruledialog.cpp \
-		../WJ_firewall/ruledialog_m.cpp
+		../WJ_firewall/ruledialog_m.cpp \
+		../WJ_firewall/aboutdialog.cpp
 QMAKE_TARGET  = WJ_firewall
 DESTDIR       = 
 TARGET        = WJ_firewall
@@ -268,7 +274,7 @@ TARGET        = WJ_firewall
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_messagedialog.h ui_ruledialog.h ui_ruledialog_m.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_messagedialog.h ui_ruledialog.h ui_ruledialog_m.h ui_aboutdialog.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../WJ_firewall/WJ_firewall.pro /opt/Qt5.9.0/5.9/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
@@ -655,9 +661,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../WJ_firewall/mainwindow.h ../WJ_firewall/common.h ../WJ_firewall/messagedialog.h ../WJ_firewall/ruledialog.h ../WJ_firewall/ruledialog_m.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../WJ_firewall/main.cpp ../WJ_firewall/mainwindow.cpp ../WJ_firewall/common.cpp ../WJ_firewall/messagedialog.cpp ../WJ_firewall/ruledialog.cpp ../WJ_firewall/ruledialog_m.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../WJ_firewall/mainwindow.ui ../WJ_firewall/messagedialog.ui ../WJ_firewall/ruledialog.ui ../WJ_firewall/ruledialog_m.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../WJ_firewall/mainwindow.h ../WJ_firewall/common.h ../WJ_firewall/messagedialog.h ../WJ_firewall/ruledialog.h ../WJ_firewall/ruledialog_m.h ../WJ_firewall/aboutdialog.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../WJ_firewall/main.cpp ../WJ_firewall/mainwindow.cpp ../WJ_firewall/common.cpp ../WJ_firewall/messagedialog.cpp ../WJ_firewall/ruledialog.cpp ../WJ_firewall/ruledialog_m.cpp ../WJ_firewall/aboutdialog.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../WJ_firewall/mainwindow.ui ../WJ_firewall/messagedialog.ui ../WJ_firewall/ruledialog.ui ../WJ_firewall/ruledialog_m.ui ../WJ_firewall/aboutdialog.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -689,9 +695,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_messagedialog.cpp moc_ruledialog.cpp moc_ruledialog_m.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_messagedialog.cpp moc_ruledialog.cpp moc_ruledialog_m.cpp moc_aboutdialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_messagedialog.cpp moc_ruledialog.cpp moc_ruledialog_m.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_messagedialog.cpp moc_ruledialog.cpp moc_ruledialog_m.cpp moc_aboutdialog.cpp
 moc_mainwindow.cpp: /opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qmainwindow.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -842,9 +848,14 @@ moc_mainwindow.cpp: /opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTimer \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTime \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QTimeEdit \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdatetimeedit.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QVariant \
 		../WJ_firewall/ruledialog.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QDialog \
+		../WJ_firewall/aboutdialog.h \
 		../WJ_firewall/messagedialog.h \
 		../WJ_firewall/ruledialog_m.h \
 		../WJ_firewall/mainwindow.h \
@@ -1105,6 +1116,10 @@ moc_ruledialog.cpp: /opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTimer \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTime \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QTimeEdit \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdatetimeedit.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QVariant \
 		../WJ_firewall/ruledialog.h \
 		moc_predefs.h \
@@ -1258,17 +1273,127 @@ moc_ruledialog_m.cpp: /opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTimer \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTime \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QTimeEdit \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdatetimeedit.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QVariant \
 		../WJ_firewall/ruledialog_m.h \
 		moc_predefs.h \
 		/opt/Qt5.9.0/5.9/gcc_64/bin/moc
 	/opt/Qt5.9.0/5.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.9.0/5.9/gcc_64/mkspecs/linux-g++ -I/home/virgil/Firewall/WJ_firewall -I/opt/Qt5.9.0/5.9/gcc_64/include -I/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets -I/opt/Qt5.9.0/5.9/gcc_64/include/QtGui -I/opt/Qt5.9.0/5.9/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../WJ_firewall/ruledialog_m.h -o moc_ruledialog_m.cpp
 
+moc_aboutdialog.cpp: /opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QDialog \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qrgba64.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qline.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qurlquery.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qtouchdevice.h \
+		../WJ_firewall/aboutdialog.h \
+		moc_predefs.h \
+		/opt/Qt5.9.0/5.9/gcc_64/bin/moc
+	/opt/Qt5.9.0/5.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.9.0/5.9/gcc_64/mkspecs/linux-g++ -I/home/virgil/Firewall/WJ_firewall -I/opt/Qt5.9.0/5.9/gcc_64/include -I/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets -I/opt/Qt5.9.0/5.9/gcc_64/include/QtGui -I/opt/Qt5.9.0/5.9/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../WJ_firewall/aboutdialog.h -o moc_aboutdialog.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_messagedialog.h ui_ruledialog.h ui_ruledialog_m.h
+compiler_uic_make_all: ui_mainwindow.h ui_messagedialog.h ui_ruledialog.h ui_ruledialog_m.h ui_aboutdialog.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_messagedialog.h ui_ruledialog.h ui_ruledialog_m.h
+	-$(DEL_FILE) ui_mainwindow.h ui_messagedialog.h ui_ruledialog.h ui_ruledialog_m.h ui_aboutdialog.h
 ui_mainwindow.h: ../WJ_firewall/mainwindow.ui \
 		/opt/Qt5.9.0/5.9/gcc_64/bin/uic
 	/opt/Qt5.9.0/5.9/gcc_64/bin/uic ../WJ_firewall/mainwindow.ui -o ui_mainwindow.h
@@ -1284,6 +1409,10 @@ ui_ruledialog.h: ../WJ_firewall/ruledialog.ui \
 ui_ruledialog_m.h: ../WJ_firewall/ruledialog_m.ui \
 		/opt/Qt5.9.0/5.9/gcc_64/bin/uic
 	/opt/Qt5.9.0/5.9/gcc_64/bin/uic ../WJ_firewall/ruledialog_m.ui -o ui_ruledialog_m.h
+
+ui_aboutdialog.h: ../WJ_firewall/aboutdialog.ui \
+		/opt/Qt5.9.0/5.9/gcc_64/bin/uic
+	/opt/Qt5.9.0/5.9/gcc_64/bin/uic ../WJ_firewall/aboutdialog.ui -o ui_aboutdialog.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -1446,9 +1575,14 @@ main.o: ../WJ_firewall/main.cpp ../WJ_firewall/mainwindow.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTimer \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTime \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QTimeEdit \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdatetimeedit.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QVariant \
 		../WJ_firewall/ruledialog.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QDialog \
+		../WJ_firewall/aboutdialog.h \
 		../WJ_firewall/messagedialog.h \
 		../WJ_firewall/ruledialog_m.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QApplication \
@@ -1610,9 +1744,14 @@ mainwindow.o: ../WJ_firewall/mainwindow.cpp ../WJ_firewall/mainwindow.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTimer \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTime \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QTimeEdit \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdatetimeedit.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QVariant \
 		../WJ_firewall/ruledialog.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QDialog \
+		../WJ_firewall/aboutdialog.h \
 		../WJ_firewall/messagedialog.h \
 		../WJ_firewall/ruledialog_m.h \
 		ui_mainwindow.h \
@@ -1805,6 +1944,10 @@ common.o: ../WJ_firewall/common.cpp ../WJ_firewall/common.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTimer \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTime \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QTimeEdit \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdatetimeedit.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QVariant
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o common.o ../WJ_firewall/common.cpp
 
@@ -2098,6 +2241,10 @@ ruledialog.o: ../WJ_firewall/ruledialog.cpp ../WJ_firewall/ruledialog.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTimer \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTime \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QTimeEdit \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdatetimeedit.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QVariant \
 		ui_ruledialog.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QAction \
@@ -2271,6 +2418,10 @@ ruledialog_m.o: ../WJ_firewall/ruledialog_m.cpp ../WJ_firewall/ruledialog_m.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTimer \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTime \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QTimeEdit \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdatetimeedit.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QVariant \
 		ui_ruledialog_m.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QAction \
@@ -2296,6 +2447,111 @@ ruledialog_m.o: ../WJ_firewall/ruledialog_m.cpp ../WJ_firewall/ruledialog_m.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qpushbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ruledialog_m.o ../WJ_firewall/ruledialog_m.cpp
 
+aboutdialog.o: ../WJ_firewall/aboutdialog.cpp ../WJ_firewall/aboutdialog.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/QDialog \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qrgba64.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qline.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qurlquery.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtGui/qtouchdevice.h \
+		ui_aboutdialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aboutdialog.o ../WJ_firewall/aboutdialog.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
@@ -2307,6 +2563,9 @@ moc_ruledialog.o: moc_ruledialog.cpp
 
 moc_ruledialog_m.o: moc_ruledialog_m.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ruledialog_m.o moc_ruledialog_m.cpp
+
+moc_aboutdialog.o: moc_aboutdialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_aboutdialog.o moc_aboutdialog.cpp
 
 ####### Install
 

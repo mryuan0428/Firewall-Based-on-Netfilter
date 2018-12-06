@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include "common.h"
 #include "ruledialog.h"
+#include "aboutdialog.h"
 #include "messagedialog.h"
 #include "ruledialog_m.h"
 extern char controlinfo[1600];
@@ -43,11 +44,16 @@ private slots:
 
     void on_action_exportRules_triggered();
 
+    void on_action_exitAPP_triggered();
+
+    void on_action_about_triggered();
+
 private:
     Ui::MainWindow *ui;
     QLabel *label_runStatus;
     RuleDialog *addRuleDialog;
     MessageDialog *delRuleDialog;
+    aboutdialog *aboutDialog;
     ruledialog_m *modRuleDialog;
     QTableWidget *rulesTable;
     QList<rule_str_tp> ruleStringList;
