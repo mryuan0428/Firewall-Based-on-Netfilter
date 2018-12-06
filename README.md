@@ -3,6 +3,8 @@
 	 - 内核版本：4.2.0-16-generic 
 	 - 开发软件：Qt 5.9.0
 	 - 编译器：gcc version 5.2.1
+	 
+ - 项目内容：
 ```
     |--data_spider文件夹
         |--dataset文件夹 -- 爬取的原始数据
