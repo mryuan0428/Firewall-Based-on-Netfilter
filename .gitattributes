@@ -1,3 +1,1 @@
-   *.c linguist-language=c
-   *.cpp linguist-language=c
    *.o linguist-language=c
