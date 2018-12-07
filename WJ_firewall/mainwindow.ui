@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>CZ firewall</string>
+   <string>WJ firewall</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">

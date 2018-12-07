@@ -264,7 +264,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "CZ firewall", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "WJ firewall", Q_NULLPTR));
         action_importRules->setText(QApplication::translate("MainWindow", "\345\257\274\345\205\245\350\247\204\345\210\231", Q_NULLPTR));
         action_exportRules->setText(QApplication::translate("MainWindow", "\345\257\274\345\207\272\350\247\204\345\210\231", Q_NULLPTR));
         action_exitAPP->setText(QApplication::translate("MainWindow", "\351\200\200\345\207\272", Q_NULLPTR));

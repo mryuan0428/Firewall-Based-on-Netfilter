@@ -2,6 +2,7 @@
 #define RULEDIALOG_M_H
 
 #include <QDialog>
+#include <QTime>
 #include "common.h"
 extern rule_str_tp modrule;
 

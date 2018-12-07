@@ -55,7 +55,7 @@ public:
 
     void retranslateUi(QDialog *MessageDialog)
     {
-        MessageDialog->setWindowTitle(QApplication::translate("MessageDialog", "Dialog", Q_NULLPTR));
+        MessageDialog->setWindowTitle(QApplication::translate("MessageDialog", "\345\210\240\351\231\244\350\247\204\345\210\231", Q_NULLPTR));
         label->setText(QApplication::translate("MessageDialog", "TextLabel", Q_NULLPTR));
         pushButton_ok->setText(QApplication::translate("MessageDialog", "\347\241\256\345\256\232", Q_NULLPTR));
         pushButton_cancel->setText(QApplication::translate("MessageDialog", "\345\217\226\346\266\210", Q_NULLPTR));

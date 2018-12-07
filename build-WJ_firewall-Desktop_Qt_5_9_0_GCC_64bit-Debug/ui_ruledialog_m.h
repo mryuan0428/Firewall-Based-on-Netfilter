@@ -119,7 +119,7 @@ public:
 
     void retranslateUi(QDialog *ruledialog_m)
     {
-        ruledialog_m->setWindowTitle(QApplication::translate("ruledialog_m", "Dialog", Q_NULLPTR));
+        ruledialog_m->setWindowTitle(QApplication::translate("ruledialog_m", "\344\277\256\346\224\271\350\247\204\345\210\231", Q_NULLPTR));
         label_2->setText(QApplication::translate("ruledialog_m", "\346\272\220\347\253\257\345\217\243\357\274\232", Q_NULLPTR));
         pushButton_ok->setText(QApplication::translate("ruledialog_m", "\347\241\256\345\256\232", Q_NULLPTR));
         pushButton_cancel->setText(QApplication::translate("ruledialog_m", "\345\217\226\346\266\210", Q_NULLPTR));

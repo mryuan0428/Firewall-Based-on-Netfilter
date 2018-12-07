@@ -49,7 +49,7 @@ public:
 
     void retranslateUi(QDialog *aboutdialog)
     {
-        aboutdialog->setWindowTitle(QApplication::translate("aboutdialog", "Dialog", Q_NULLPTR));
+        aboutdialog->setWindowTitle(QApplication::translate("aboutdialog", "About", Q_NULLPTR));
         pushButton_ok->setText(QApplication::translate("aboutdialog", "\347\241\256\345\256\232", Q_NULLPTR));
         label->setText(QApplication::translate("aboutdialog", "TextLabel", Q_NULLPTR));
     } // retranslateUi

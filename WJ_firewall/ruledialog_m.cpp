@@ -19,6 +19,9 @@ ruledialog_m::ruledialog_m(QWidget *parent) :
     ui->lineEdit_dst_port->setText(modrule.dst_port);
     ui->comboBox_time->setCurrentText(modrule.time_flag);
     ui->comboBox_protocol->setCurrentText(modrule.protocol);
+    QTime ti ;
+    ui->timeEdit->setTime(ti.fromString(modrule.hour_begin+':'+modrule.min_begin,"hh:mm"));
+    ui->timeEdit_2->setTime(ti.fromString(modrule.hour_end+':'+modrule.min_end,"hh:mm"));
 }
 
 ruledialog_m::~ruledialog_m()
