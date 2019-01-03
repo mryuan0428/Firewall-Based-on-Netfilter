@@ -42,7 +42,7 @@
  - 运行界面：
  	 - 主界面
 
- 	![Image text](/image/MainWindows.png)
+ 	![Image text](/image/MainWindow.png)
  	 - 添加规则
 
  	![Image text](/image/AddRule.png)
