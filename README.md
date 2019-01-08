@@ -40,6 +40,9 @@
  - 对于一些新版本内核需要修改内核部分代码，WJ_firewall.c文件中：
     - nf_register_hook(&myhook)函数 需改为 nf_register_net_hook(&init_net,&myhook)
     - nf_unregister_hook(&myhook)函数 需改为 nf_unregister_net_hook(&init_net,&myhook)
+ - 使用前需安装Qt5并配置好环境：
+    - 修改/usr/lib/x86_64-linux-gnu/qt-default/qtchooser/default.conf文件为新安装Qt路径
+    - 使用Qt前还需安装libGL库：sudo apt-get install libgl1-mesa-dev
 ```
 
  - 运行界面：
