@@ -37,6 +37,9 @@
 ```
  - 防火墙为黑名单模式，符合规则之一报文即被Reject
  - 对于所有被Reject的报文都自动进行日志记录
+ - 对于一些新版本内核：
+    - nf_register_hook(&myhook)函数 需改为 nf_register_net_hook(&init_net,&myhook)
+    - nf_unregister_hook(&myhook)函数 需改为 nf_unregister_net_hook(&init_net,&myhook)
 ```
 
  - 运行界面：
